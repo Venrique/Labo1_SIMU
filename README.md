@@ -14,6 +14,8 @@ En esta práctica trabajaremos con los siguientes temas:
 
 Ayudanos a mejorar! Completa el siguiente cuestionario
 
-Para servirles, **Equipo de Instructores**
+
+<hr>
+<p align="center">Para servirles, <strong>Equipo de Instructores</strong> </p>
 
 Para este caso, resulta difícil pensar en una forma parecida a la anterior :rofl:
