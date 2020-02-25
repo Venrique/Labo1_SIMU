@@ -45,7 +45,7 @@ void productRealMatrix(float real,Matrix M,Matrix &R){
 }
 
 void getMinor(Matrix &M,int i, int j){
-    M.erase(M.begin()+i); //Uso de begin para obtener un iterator a la posici�n de inter�s
+    M.erase(M.begin()+i); 
     for(int i=0;i<M.size();i++)
         M.at(i).erase(M.at(i).begin()+j);
 }
