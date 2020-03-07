@@ -89,6 +89,27 @@ float determinant(Matrix M){
     }
 }
 
+Vector sumVector(Vector A,Vector B,int n){
+    Vector R;
+
+    zeroes(R,n);
+    for(int i=0;i<n;i++)
+        R.at(i) = A.at(i)+B.at(i);
+
+    return R;
+}
+
+Matrix sumMatrix(Matrix A,Matrix B,int n,int m){
+    Matrix R;
+
+    zeroes(R,n,m);
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+            R.at(i).at(j) = A.at(i).at(j)+B.at(i).at(j);
+
+    return R;
+}
+
 void cofactors(Matrix M, Matrix &Cof){
     zeroes(Cof,M.size());
     for(int i=0;i<M.size();i++){
