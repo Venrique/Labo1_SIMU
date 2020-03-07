@@ -7,6 +7,13 @@ using namespace std;
 typedef vector<float> Vector;
 typedef vector<Vector> Matrix;
 
+
+void zeroes(Vector &v,int n){
+    for(int i=0;i<n;i++){
+        v.push_back(0.0);
+    }
+}
+
 void zeroes(Matrix &M,int n){
     for(int i=0;i<n;i++){
         vector<float> row(n,0.0);
@@ -14,10 +21,10 @@ void zeroes(Matrix &M,int n){
     }
 }
 
-void zeroes(Vector &v,int n){
-    for(int i=0;i<n;i++){
-        v.push_back(0.0);
-    }
+void copyVector(Vector v, Vector &copy){
+    zeroes(copy,v.size());
+    for(int i=0;i<v.size();i++)
+        copy.at(i) = v.at(i);
 }
 
 void copyMatrix(Matrix A, Matrix &copy){
@@ -42,6 +49,24 @@ void productRealMatrix(float real,Matrix M,Matrix &R){
     for(int i=0;i<M.size();i++)
         for(int j=0;j<M.at(0).size();j++)
             R.at(i).at(j) = real*M.at(i).at(j);
+}
+
+float calculateMember(int i,int j,int r,Matrix A,Matrix B){
+    float member = 0;
+    for(int k=0;k<r;k++)
+        member += A.at(i).at(k)*B.at(k).at(j);
+    return member;
+}
+
+Matrix productMatrixMatrix(Matrix A,Matrix B,int n,int r,int m){
+    Matrix R;
+
+    zeroes(R,n,m);
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+            R.at(i).at(j) = calculateMember(i,j,r,A,B);
+
+    return R;
 }
 
 void getMinor(Matrix &M,int i, int j){
