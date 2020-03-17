@@ -78,7 +78,8 @@ void copyMatrix(Matrix A, Matrix &copy){
 ### Creando la funcion productMatrixVector
 
 ```cpp
-//La funcion asume que las dimensiones de la matriz y los vectores son las adecuadas para que la multiplicacion sea posible.
+//La funcion asume que las dimensiones de la matriz y los vectores son las adecuadas para que la multiplicacion
+//sea posible.
 //La funcion recibe: Una matriz, Un vector, Un vector y un vector para la respuesta.
 
 void productMatrixVector(Matrix A, Vector v, Vector &R){
@@ -100,7 +101,8 @@ void productMatrixVector(Matrix A, Vector v, Vector &R){
 ### Creando la funcion productRealMatrix
 
 ```cpp
-//La funcion multiplica cada uno de los elementos de la matriz por el escalar, ubicando los resultados en la matriz de respuesta.
+//La funcion multiplica cada uno de los elementos de la matriz por el escalar, ubicando los resultados 
+//en la matriz de respuesta.
 //La funcion recibe: Un escalar(Valor Real), una matriz y una matriz para la respuesta.
 
 void productRealMatrix(float real,Matrix M,Matrix &R){
