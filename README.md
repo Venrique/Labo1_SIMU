@@ -27,6 +27,8 @@ typedef vector<Vector> Matrix;
 
 ```cpp
 //La funcion crea una matriz cuadrada nxn llena de ceros
+//La funcion recibe: Una matriz y la dimension de la matriz
+
 void zeroes(Matrix &M,int n){
     //Se crean n filas
     for(int i=0;i<n;i++){
@@ -43,6 +45,7 @@ void zeroes(Matrix &M,int n){
 ```cpp
 //La funcion crea una matriz cuadrada nx1 llena de ceros
 //La funcion recibe: Un vector columna y la dimension del vector
+
 void zeroes(Vector &v,int n){
     //Se itera n veces
     for(int i=0;i<n;i++){
@@ -77,6 +80,7 @@ void copyMatrix(Matrix A, Matrix &copy){
 ```cpp
 //La funcion asume que las dimensiones de la matriz y los vectores son las adecuadas para que la multiplicacion sea posible.
 //La funcion recibe: Una matriz, Un vector, Un vector y un vector para la respuesta.
+
 void productMatrixVector(Matrix A, Vector v, Vector &R){
     //Se itera una cantidad de veces igual al numero de filas de la matriz
     for(int f=0;f<A.size();f++){
@@ -98,6 +102,7 @@ void productMatrixVector(Matrix A, Vector v, Vector &R){
 ```cpp
 //La funcion multiplica cada uno de los elementos de la matriz por el escalar, ubicando los resultados en la matriz de respuesta.
 //La funcion recibe: Un escalar(Valor Real), una matriz y una matriz para la respuesta.
+
 void productRealMatrix(float real,Matrix M,Matrix &R){
     //Se prepara la matriz de respuesta con las mismas dimensiones de la
     //matriz
@@ -112,11 +117,12 @@ void productRealMatrix(float real,Matrix M,Matrix &R){
 
 ```
 
-### Creando la funcion productRealMatrix
+### Creando la funcion getMinor
 
 ```cpp
 //La funcion elimina en la matriz la fila i, y la columna j
 //La funcion recibe: Una matriz, un indice de fila i y un indice de fila j.
+
 void getMinor(Matrix &M,int i, int j){
     //Se elimina la fila i
     M.erase(M.begin()+i); //Uso de begin para obtener un iterator a la posicion de interes
@@ -124,6 +130,79 @@ void getMinor(Matrix &M,int i, int j){
     for(int i=0;i<M.size();i++)
         //En cada fila se elimina la columna j
         M.at(i).erase(M.at(i).begin()+j);
+}
+
+```
+### Creando la funcion determinant
+
+```cpp
+    //La funcion calcula el determinante de la matriz de forma recursiva
+	//La funcion recibe: Una natriz
+    
+	float determinant(Matrix M){
+	    //Caso trivial: si la matriz solo tiene una celda, ese valor es el determinante
+	    if(M.size() == 1) return M.at(0).at(0);
+	    else{
+	        //Se inicia un acumulador
+	        float det=0.0;
+	        //Se recorre la primera fila
+	        for(int i=0;i<M.at(0).size();i++){
+	            //Se obtiene el menor de la posicion actual
+	            Matrix minor;
+	            copyMatrix(M,minor);
+	            getMinor(minor,0,i);
+
+	            //Se calculala contribucion de la celda actual al determinante
+	            //(valor alternante * celda actual * determinante de menor actual)
+	            det += pow(-1,i)*M.at(0).at(i)*determinant(minor);
+	        }
+	        return det;
+	    }
+	}
+
+```
+### Creando la funcion cofactors
+
+```cpp
+//La funcion recibe saca el cofactor de una matriz.
+//La funcion recibe: Una matriz y la matriz que contendra los cofactores de la primera.
+
+void cofactors(Matrix M, Matrix &Cof){
+    //Se prepara la matriz de cofactores para que sea de las mismas
+    //dimensiones de la matriz original
+    zeroes(Cof,M.size());
+    //Se recorre la matriz original
+    for(int i=0;i<M.size();i++){
+        for(int j=0;j<M.at(0).size();j++){
+            //Se obtiene el menor de la posicion actual
+            Matrix minor;
+            copyMatrix(M,minor);
+            getMinor(minor,i,j);
+            //Se calcula el cofactor de la posicion actual
+            //      alternante * determinante del menor de la posicion actual
+            Cof.at(i).at(j) = pow(-1,i+j)*determinant(minor);
+        }
+    }
+}
+
+```
+
+### Creando la funcion transpose
+
+```cpp
+//La funcion transpone la primera matriz y almacena el resultado en la segunda
+//La funcion recibe: Una matriz y la matriz que contendra a la primera transpuesta
+
+void transpose(Matrix M, Matrix &T){
+    //Se prepara la matriz resultante con las mismas dimensiones
+    //de la matriz original
+    zeroes(T,M.size());
+    //Se recorre la matriz original
+    for(int i=0;i<M.size();i++)
+        for(int j=0;j<M.at(0).size();j++)
+            //La posicion actual se almacena en la posicion con indices
+            //invertidos de la matriz resultante
+            T.at(j).at(i) = M.at(i).at(j);
 }
 
 ```
