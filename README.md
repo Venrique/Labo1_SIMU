@@ -138,31 +138,32 @@ void getMinor(Matrix &M,int i, int j){
 ### Creando la funcion determinant
 
 ```cpp
-    //La funcion calcula el determinante de la matriz de forma recursiva
-	//La funcion recibe: Una natriz
+//La funcion calcula el determinante de la matriz de forma recursiva
+//La funcion recibe: Una natriz
     
-	float determinant(Matrix M){
-	    //Caso trivial: si la matriz solo tiene una celda, ese valor es el determinante
-	    if(M.size() == 1) return M.at(0).at(0);
-	    else{
-	        //Se inicia un acumulador
-	        float det=0.0;
-	        //Se recorre la primera fila
-	        for(int i=0;i<M.at(0).size();i++){
-	            //Se obtiene el menor de la posicion actual
-	            Matrix minor;
-	            copyMatrix(M,minor);
-	            getMinor(minor,0,i);
+float determinant(Matrix M){
+    //Caso trivial: si la matriz solo tiene una celda, ese valor es el determinante
+    if(M.size() == 1) return M.at(0).at(0);
+    else{
+        //Se inicia un acumulador
+        float det=0.0;
+        //Se recorre la primera fila
+        for(int i=0;i<M.at(0).size;i++){
+            //Se obtiene el menor de la posicion actual
+            Matrix minor;
+            copyMatrix(M,minor);
+            getMinor(minor,0,i);
 
-	            //Se calculala contribucion de la celda actual al determinante
-	            //(valor alternante * celda actual * determinante de menor actual)
-	            det += pow(-1,i)*M.at(0).at(i)*determinant(minor);
-	        }
-	        return det;
-	    }
-	}
+            //Se calculala contribucion de la celda actual al determinante
+            //(valor alternante * celda actual * determinante de menor actual)
+            det += pow(-1,i)*M.at(0).at(i)*determinant(minor);
+        }
+        return det;
+    }
+}
 
 ```
+
 ### Creando la funcion cofactors
 
 ```cpp
@@ -205,6 +206,33 @@ void transpose(Matrix M, Matrix &T){
             //La posicion actual se almacena en la posicion con indices
             //invertidos de la matriz resultante
             T.at(j).at(i) = M.at(i).at(j);
+}
+
+```
+
+### Creando la funcion inverseMatrix
+```cpp
+//La funcion calcula la inversa de la primera matriz, y almacena el resultado en la segunda.
+//La funcion recibe: Una matriz y la matriz que contendra la inversa de la primera.
+
+void inverseMatrix(Matrix M, Matrix &Minv){
+    //Se utiliza la siguiente formula:
+    //      (M^-1) = (1/determinant(M))*Adjunta(M)
+    //             Adjunta(M) = transpose(Cofactors(M))
+
+    //Se preparan las matrices para la de cofactores y la adjunta
+    Matrix Cof, Adj;
+    //Se calcula el determinante de la matriz
+    float det = determinant(M);
+    //Si el determinante es 0, se aborta el programa
+    //No puede dividirse entre 0 (matriz no invertible)
+    if(det == 0) exit(EXIT_FAILURE);
+    //Se calcula la matriz de cofactores
+    cofactors(M,Cof);
+    //Se calcula la matriz adjunta
+    transpose(Cof,Adj);
+    //Se aplica la formula para la matriz inversa
+    productRealMatrix(1/det,Adj,Minv);
 }
 
 ```
