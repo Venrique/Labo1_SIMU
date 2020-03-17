@@ -210,33 +210,6 @@ void transpose(Matrix M, Matrix &T){
 
 ```
 
-### Creando la funcion inverseMatrix
-```cpp
-//La funcion calcula la inversa de la primera matriz, y almacena el resultado en la segunda.
-//La funcion recibe: Una matriz y la matriz que contendra la inversa de la primera.
-
-void inverseMatrix(Matrix M, Matrix &Minv){
-    //Se utiliza la siguiente formula:
-    //      (M^-1) = (1/determinant(M))*Adjunta(M)
-    //             Adjunta(M) = transpose(Cofactors(M))
-
-    //Se preparan las matrices para la de cofactores y la adjunta
-    Matrix Cof, Adj;
-    //Se calcula el determinante de la matriz
-    float det = determinant(M);
-    //Si el determinante es 0, se aborta el programa
-    //No puede dividirse entre 0 (matriz no invertible)
-    if(det == 0) exit(EXIT_FAILURE);
-    //Se calcula la matriz de cofactores
-    cofactors(M,Cof);
-    //Se calcula la matriz adjunta
-    transpose(Cof,Adj);
-    //Se aplica la formula para la matriz inversa
-    productRealMatrix(1/det,Adj,Minv);
-}
-
-```
-
 <hr>
 <p align="center">Para servirles, <strong>Equipo de Instructores</strong> </p>
 
