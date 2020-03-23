@@ -57,7 +57,7 @@ float calculateMember(int i,int j,int r,Matrix A,Matrix B){
         member += A.at(i).at(k)*B.at(k).at(j);
     return member;
 }
-
+/*
 Matrix productMatrixMatrix(Matrix A,Matrix B,int n,int r,int m){
     Matrix R;
 
@@ -68,7 +68,7 @@ Matrix productMatrixMatrix(Matrix A,Matrix B,int n,int r,int m){
 
     return R;
 }
-
+*/
 void getMinor(Matrix &M,int i, int j){
     M.erase(M.begin()+i); 
     for(int i=0;i<M.size();i++)
@@ -98,7 +98,7 @@ Vector sumVector(Vector A,Vector B,int n){
 
     return R;
 }
-
+/*
 Matrix sumMatrix(Matrix A,Matrix B,int n,int m){
     Matrix R;
 
@@ -109,7 +109,7 @@ Matrix sumMatrix(Matrix A,Matrix B,int n,int m){
 
     return R;
 }
-
+*/
 void cofactors(Matrix M, Matrix &Cof){
     zeroes(Cof,M.size());
     for(int i=0;i<M.size();i++){
@@ -127,4 +127,27 @@ void transpose(Matrix M, Matrix &T){
     for(int i=0;i<M.size();i++)
         for(int j=0;j<M.at(0).size();j++)
             T.at(j).at(i) = M.at(i).at(j);
+}
+
+void inverse(Matrix M,  Matrix &Inv){
+    
+    Matrix cofactores;
+    Matrix adjunta;
+
+    cofactors(M,cofactores);
+    transpose(cofactores,adjunta);
+
+    float det = determinant(M);
+
+    if(det!=0){
+        zeroes(Inv,M.size());
+
+        for(int i=0;i<M.size();i++)
+            for(int j=0;j<M.at(0).size();j++)
+                Inv.at(i).at(j) = ((adjunta.at(i).at(j))/det);
+    }else{
+        exit(EXIT_FAILURE);
+    }
+
+    
 }
